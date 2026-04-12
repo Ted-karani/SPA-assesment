@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+<h1><strong>Single Page Application</strong></h1>
+<h6>feel free to search for a word and see its definition and its synonymm using the search bar below.</h6>
+
+    </header>
+<br>
+<br>
+    <div id="search">
+        <input type="text" placeholder="search for a word">
+        <button id="searchButton" type="submit"> search</button> 
+    </div>
+<br>
+    <div id="searchResults">
+        <h3 id="searchedWord"></h3>
+    
+        <p id="definition"> here is the definition.</p>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div id="audioclass">
+                <audio  id="audio">
+            <source id="definitionAudio" src="" >
+        </audio>
+
+        <button id="playButton"> click here to play pronunciation</button>
+    </div>
+    
+</body>
+<script src="script.js"></script>
+</html>
