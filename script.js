@@ -8,46 +8,70 @@
 // also audio playback * not sure about this
 
 // also  use preventdefault to prevent refreshing
-
-const dictionary = document.querySelector('#search')
-const results = document.querySelector('#searchResults')
+const eventListener = document.querySelector("#usersSearchForm");
+const writeHere = document.querySelector('#typingWord');
 const audio = document.querySelector('#audioclass')
-const searchButton = document.querySelector('#searchButton')
 const audioButton = document.querySelector('#playButton')
-const definition = document.querySelector('#definition')
+const searchedWord = document.querySelector('#searchedWord')
+const definitionPart = document.querySelector('#definitionPart')
 
 
-searchButton.addEventListener('click', me => {
-    me.preventdefault()
-    retrieveWord
+
+function retrieveWord(word){
+    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+    .then(response => response.json())
+    .then(data =>{
+        searchedWord.textContent = word;
+
+    const theWordsDictionary = data[0].meanings;
+    theWordsDictionary.forEach(someWords => 
+        {someWords.definitions.forEach(miranda => {definitionPart.innerHTML += 
+        `<p> ${miranda.definition}</p>`;})
+        
+    });
 })
-audioButton.addEventListener('click', you => {
-    you.preventDefault()
-    retrieveWord
+
+    .catch(() => { definitionPart.innerHTML = "there is a problem with your word";
     
 })
-
-async function retrieveWord (word){
-    try{
-        
-        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-        const data = await response.json();
-
-        if(!response.ok){
-            throw Error("enter a word to search please")
-        }
-        
-        displayWord(data);
-
+} 
+eventListener.addEventListener('submit', me => {
+    me.preventDefault();
+    const word = writeHere.value;
+    if (word ===""){
+        definitionPart.innerHTML = "cmon enter something"
+        return;
     }
-    catch (error){
-        console.error("invalid request to get word")
-    }}
+    retrieveWord(word);
 
-    function displayWord(data){
-        definition.textContent = `${word} details`
+    // console.log('button clicked')
+    
+})
+audioButton.addEventListener('click', you => {
+    you.preventDefault(); 
+})
 
-    }
+// async function retrieveWord (word){
+//     try{
+        
+//         const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+//         const data = await response.json();
+
+//         if(!response){
+//             throw Error("please enter a word to search please")
+//         }
+        
+//         displayWord(data);
+
+//     }
+//     catch (error){
+//         console.error("invalid request to get word")
+//     }}
+
+//     function displayWord(data){
+//         definition.textContent = `${word} details`
+
+//     }
     
 
 // .then(response => response.json())
